@@ -3,27 +3,27 @@ function getRandomNumber(min, max) {
 }
 
 function startGame() {
-    var gameStart = {
+    var gameSettings = {
         currentSum: 0,
-        targetRandNumber: getRandomNumber(19, 120),
-    }
-    return gameStart;
+        targetRandNumber: getRandomNumber(19, 120)
+        }
+    return gameSettings;
 }
 
 function setJewelValue (item) {
     item.attr("data-crystalvalue", getRandomNumber(1,12));
 }
 
-function userTotal (gameStart, sum){
-    gameStart.currentSum += sum;
-    return gameStart.currentSum;
+function userTotal (stats, sum){
+    stats.currentSum += sum;
+    return stats.currentSum;
 }
 
 function animateImage (item, index, arr) {
-    arr[0].css({"position":"absolute","top":"12rem","left":"2rem"});
-    arr[1].css({"position":"absolute","top":"12rem","left":"15rem"});
-    arr[2].css({"position":"absolute","top":"12rem","right":"15rem"});
-    arr[3].css({"position":"absolute","top":"12rem","right":"2rem"});
+    arr[0].css({"top":"12rem","left":"2rem"});
+    arr[1].css({"top":"12rem","left":"15rem"});
+    arr[2].css({"top":"12rem","right":"15rem"});
+    arr[3].css({"top":"12rem","right":"2rem"});
     $(".crystal-image").animate({
         height: '+=300px',
         width: '+=300px'
@@ -34,20 +34,22 @@ function animateImage (item, index, arr) {
     },"slow");
 }
 
-function resetPosition (item, index, arr) {
-    //item.css("position","static");
-    //item.removeAttr("style");
-    // arr[1].css("position","static");
-    // arr[2].css("position","static");
-    // arr[3].css("position","static");
+function resetPosition() {
+    setTimeout(function(){
+        $(".crystal-image").removeClass("imgAbsolute");
+    }, 5000);
 }
 
-function newGame () {
-    gameStart = startGame();
-    $("#target-Num").text(gameStart.targetRandNumber);
-    $("#current-Sum").text(gameStart.currentSum);
-    jewels.forEach(setJewelValue);
-    return gameStart;
+function updateScore(item, value) {
+    item.text(value);
+}
+
+function newGame (jewelsArr) {
+    stats = startGame();
+    $("#target-Num").text(stats.targetRandNumber);
+    $("#current-Sum").text(stats.currentSum);
+    jewelsArr.forEach(setJewelValue);
+    return stats;
 }
 
 $(document).ready(function () {
@@ -63,33 +65,31 @@ $(document).ready(function () {
     var purple = $("#purple");
     var red = $("#red");
 
-    jewels = [blue,green,purple,red];
+    var jewels = [blue,green,purple,red];
     jewels.forEach(setJewelValue);
 
-    var gameStart = startGame();
-    $("#target-Num").text(gameStart.targetRandNumber);
-    $("#current-Sum").text(gameStart.currentSum);
-
+    var gameStats = newGame(jewels);
   
     $(".crystal-image").on("click", function() {
         crystalValue = ($(this).attr("data-crystalvalue"));
         crystalValue = parseInt(crystalValue);
-        $("#current-Sum").text(userTotal(gameStart, crystalValue));
-  
-  
-        if (gameStart.currentSum === gameStart.targetRandNumber) {
+        $("#current-Sum").text(userTotal(gameStats, crystalValue));
+    
+        if (gameStats.currentSum === gameStats.targetRandNumber) {
             alert("You win!");
+            $(".crystal-image").addClass("imgAbsolute")
             jewels.forEach(animateImage);
-            $(".crystal-image").css("position","static");
-            //jewels.forEach(resetPosition);
+            resetPosition();
             wins++;
-            winsItem.text(wins);
-            gameStart = newGame();
-        } else if (gameStart.currentSum >= gameStart.targetRandNumber) {
+            updateScore(winsItem,wins);
+            //winsItem.text(wins);
+            gameStats = newGame(jewels);
+        } else if (gameStats.currentSum >= gameStats.targetRandNumber) {
             alert("You lose!!");
             losses++;
-            lossItem.text(losses);
-            gameStart = newGame();
+            updateScore(lossItem,losses);
+            //lossItem.text(losses);
+            gameStats = newGame(jewels);
         }
     });
 });   

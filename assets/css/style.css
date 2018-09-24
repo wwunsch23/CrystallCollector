@@ -23,12 +23,12 @@ h2 {
 .container {
   display: grid;
   grid-template-areas: 
-    'header header header header header header' 
-    '. inst inst wins losses .'
-    '. inst inst target sum .'
-    'left . img1 img2 . right' 
-    'footer footer footer footer footer footer';
-  grid-row-gap: 10px;
+    'header header header header' 
+    'inst inst wins losses'
+    'inst inst target sum'
+    ' . img1 img2 .' 
+    'footer footer footer footer';
+  grid-gap: 10px;
   margin: 0 auto;
   max-width: 960px;
   position: relative;
@@ -89,3 +89,7 @@ img {
     height: 100px;
     margin: 5px;
   }
+
+.imgAbsolute {
+  position: absolute;
+}
