@@ -1,4 +1,91 @@
-.crystal-image {
-    width: 300px;
-    height: 300px;
+html {
+  background: url(../images/abstract-art-background-370799.jpg) no-repeat center center fixed; 
+  background-size: cover;
+}
+
+body {
+  color: white;
+  font-family: 'Roboto 400', sans-serif;
+}
+
+h1, h2 {
+  font-family: 'Roboto 500', sans-serif;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 
+    'header header header header header header' 
+    '. inst inst wins losses .'
+    '. inst inst target sum .'
+    'left . img1 img2 . right' 
+    'footer footer footer footer footer footer';
+  grid-row-gap: 10px;
+  margin: 0 auto;
+  max-width: 960px;
+  position: relative;
+}
+
+.header {
+  grid-area: header;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+  text-shadow: 4px 4px 4px #aaa;
+}
+
+.instruct-box {
+  grid-area: inst;
+  margin-right: 15px;
+  border: 1px solid rgb(35, 39, 43);
+  background: rgb(147, 162, 177);
+  border-radius: 10px;
+
+}
+
+.instruct-text {
+  margin: 10px 20px;
+}
+
+.wins-box {
+  grid-area: wins;
+}
+
+.loss-box {
+  grid-area: losses;
+}
+
+.target-box{
+  grid-area: target;
+}
+
+.sum-box {
+  grid-area: sum;
+}
+
+.image-group1 {
+  grid-area: img1;
+  text-align: end;
+}
+
+.image-group2 {
+  grid-area: img2;
+}
+
+.stat-header {
+  text-align: center;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
   }
